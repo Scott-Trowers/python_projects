@@ -1,0 +1,16 @@
+# python
+__pycache__/
+*.py[oc]
+*.egg-info/
+build/
+dist/
+wheels/
+
+# uv
+.venv/
+uv.lock
+
+# ide / os
+.DS_Store
+.idea/
+.vscode/
