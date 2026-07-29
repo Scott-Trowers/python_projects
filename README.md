@@ -1,6 +1,6 @@
 # 100 days of code
 
-100 small Python projects, one per day, to build consistent practice and improve Python fluency.
+Small Python projects, one per day, to build consistent practice and improve Python fluency.
 
 Each project lives in `projects/dayN/` as an independent uv-managed Python project.
 
@@ -20,6 +20,16 @@ projects/
 
 ## Starting a new project
 
+The script at the repo root — run it from the repo root, passing the day number:
+
+```bash
+./new_day.sh 17
+```
+
+This creates `projects/day17/` with a uv project initialised and `src/main.py` ready to go.
+
+### Manual steps (for reference)
+
 1. Create a folder for the day and move into it:
 
    ```bash
@@ -32,18 +42,22 @@ projects/
    uv init --no-workspace
    ```
 
-   This creates `pyproject.toml`, `main.py`, `.python-version`, and `.gitignore`.
-
-3. Add any dependencies you need:
+3. Move the generated `main.py` into `src/`:
 
    ```bash
-   uv add requests
+   mkdir src && mv main.py src/main.py
    ```
 
-4. Run the script:
+4. Add any dependencies:
 
    ```bash
-   uv run main.py
+   uv add pandas
    ```
 
-That's it — uv handles the virtual environment automatically. No need to activate anything manually.
+5. Run the script:
+
+   ```bash
+   uv run src/main.py
+   ```
+
+uv handles the virtual environment automatically — no need to activate it manually.
