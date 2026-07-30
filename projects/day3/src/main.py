@@ -1,28 +1,6 @@
-from dict import MENU, resources
+from menu_and_resources import MENU, resources
 import sys
-import pprint
 import time
-
-'''
-1) prompt user
-2) options:
-    a) 'off' -> end execution
-    b) 'report' -> show current resources
-    c) 'espresso/latte/cappuccino' -> begin making drink
-3) begin making drink:
-    a) check enough resources to make selected drink
-        i) if not, show an error message
-    b) take payment:
-        i) prompt payment (as input) until cost is covered
-        ii) if too much given, return change
-        iii) record to resources
-    c) make the drink:
-        i) deduct resources
-        ii) output drink
-4) reset for next customer    
-'''
-
-resources["money"] = 0
 
 def option_menu():
     options = {
@@ -33,15 +11,19 @@ def option_menu():
         5: 'power_off',
     }
 
+    # 'report' and 'power_off' are secret options, not shown to the user
     option_selected = 0
     print("Options:")
     print("    1 - espresso\n    2 - latte\n    3 - cappuccino")
     while not (1 <= option_selected <= 5):
-        option_selected = int(input("Select Option: "))
+        try:
+            option_selected = int(input("Select Option: "))
+        except ValueError:
+            print("Please enter an valid (integer) option.")
 
     option_item = options[option_selected]
 
-    return option_item, options
+    return option_item
 
 
 def power_off():
@@ -78,12 +60,16 @@ def charge_customer(item, resources):
     payment = 0
     remaining_price = price - payment
     while remaining_price > 0:
-        payment += float(input(f"Please insert £{remaining_price:.2f}: "))
+        try:
+            payment += float(input(f"Please insert £{remaining_price:.2f}: "))
+        except ValueError:
+            print("Please enter a numeric value.")
         remaining_price = price - payment
 
     print("Payment Successful!")
     time.sleep(0.75)
 
+    # return payment when remaining_price is exceeded, by 'adding' the negative back to payment
     if remaining_price < 0:
         print(f"Returning Change: £{-1 * remaining_price:.2f}")
         payment += remaining_price
@@ -117,7 +103,7 @@ def coffee_machine(resources):
         print("Welcome!")
         time.sleep(1)
 
-        option_selected, options = option_menu()
+        option_selected = option_menu()
 
         print("------------")
 
