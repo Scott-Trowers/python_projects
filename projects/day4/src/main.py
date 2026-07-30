@@ -3,24 +3,6 @@ from coffee_maker import CoffeeMaker
 from money_machine import MoneyMachine
 import time
 
-'''
-1) prompt user
-2) options:
-    a) 'off' -> end execution
-    b) 'report' -> show current resources
-    c) 'espresso/latte/cappuccino' -> begin making drink
-3) begin making drink:
-    a) check enough resources to make selected drink
-        i) if not, show an error message
-    b) take payment:
-        i) prompt payment (as input) until cost is covered
-        ii) if too much given, return change
-        iii) record to resources
-    c) make the drink:
-        i) deduct resources
-        ii) output drink
-4) reset for next customer    
-'''
 menu = Menu()
 coffee_maker = CoffeeMaker()
 money_processer = MoneyMachine()
@@ -33,6 +15,7 @@ while is_on:
     all_options = ['off', 'report'] + drink_options
     selected_option = ''
     while selected_option not in all_options:
+        # 'report' and 'power_off' are secret options, not shown to the user
         selected_option = str(input(f"What would you like?\n{' '.join(drink_options)}\n")).lower()
 
     print('-----------------')
@@ -48,9 +31,10 @@ while is_on:
 
         if has_resources:
             price = selected_drink.cost
-            print(f"One {selected_drink.name} is ${price:.2f}")
+            print(f"One {selected_drink.name} is {money_processer.CURRENCY}{price:.2f}")
             has_paid = money_processer.make_payment(price)
         else:
+            has_paid = False
             print(f"Sorry, {selected_drink} is currently unavailable.")
 
         print('-----------------')

@@ -8,6 +8,12 @@ A CLI coffee machine simulator written in a procedural style. Serves espresso, l
 uv run src/main.py
 ```
 
+## skills
+
+- procedural programming style
+- modular structure — data and logic separated into different files
+- error handling with `try/except`
+
 ## features
 
 - tracks water, milk, and coffee resources — refuses orders it can't fulfil

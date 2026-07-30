@@ -8,6 +8,12 @@ A CLI guessing game based on Instagram follower counts. Pick which of two celebr
 uv run src/main.py
 ```
 
+## skills
+
+- functions and control flow
+- `random.sample` for sampling without replacement
+- dictionaries for tracking session stats
+
 ## features
 
 - random pairs drawn from a dataset of ~50 celebrities and brands

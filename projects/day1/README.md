@@ -8,6 +8,13 @@ A CLI blackjack game with betting in pounds, played against a simple dealer AI.
 uv run src/main.py
 ```
 
+## skills
+
+- functions and control flow
+- dictionaries for tracking session state
+- error handling with `try/except`
+- `random` module
+
 ## features
 
 - place a bet before each round (whole pounds only)
