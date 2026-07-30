@@ -3,10 +3,12 @@ from art import logo
 import time
 
 def take_bets():
-
     bet = 0
     while bet <= 0:
-        bet = int(input("Place your bets! Whole pounds only! "))
+        try:
+            bet = int(input("Place your bets! Whole pounds only! £"))
+        except ValueError:
+            print("Please enter an integer amount!")
 
     return bet
 
@@ -29,6 +31,7 @@ def evaluate_hand(hand):
     elif score < 21:
         print(f"Score: {score}")
     else:
+        # ace is worth 11 by default, but can be a 1 if the hand would otherwise be bust
         while score > 21 and 11 in hand:
             hand[hand.index(11)] = 1
             score = sum(hand)
@@ -36,18 +39,19 @@ def evaluate_hand(hand):
 
     if score > 21:
         print(f"!!BUST!!")
+        # convert a bust to 0 for easier score comparison and stat tracking
         score = 0
 
     return score
 
 
 def users_turn(user_hand, deck):
-
     turn_ended = False
 
     while not turn_ended:
         user_score = evaluate_hand(hand=user_hand)
 
+        # 0 represents bust
         if user_score == 0:
             turn_ended = True
             return user_score, user_hand
@@ -70,21 +74,28 @@ def users_turn(user_hand, deck):
 
 
 def result(user_score, dealers_score, bid, game_stats):
+    # user bust or lost
     if user_score == 0 or (user_score < dealers_score):
         print(f"You lost {bid}!")
         game_stats["total_profit"] -= bid
         game_stats["games_played"] += 1
         game_stats["games_lost"] += 1
-        game_stats["busts"] += 1
+
+        if user_score == 0:
+            game_stats["busts"] += 1
+
+    # dealer bust
     if dealers_score == 0:
         print(f"Dealer Bust! You win {bid}!")
         game_stats["total_profit"] += bid
         game_stats["games_played"] += 1
         game_stats["games_won"] += 1
+    # draw
     elif user_score == dealers_score:
         print("DRAW!")
         game_stats["games_played"] += 1
         game_stats["games_drawn"] += 1
+    # user won
     elif user_score > dealers_score:
         print(f"You win {bid}!")
         game_stats["total_profit"] += bid
@@ -93,11 +104,13 @@ def result(user_score, dealers_score, bid, game_stats):
 
     return game_stats
 
+
 def dealers_turn(dealers_hand, deck):
     print(f"Dealer's hand: {dealers_hand}")
 
     dealers_score = evaluate_hand(dealers_hand)
 
+    # if the dealer isn't bust (and therefore has a score of 0) they must 'twist' until scoring over 16
     while dealers_score <= 16 and dealers_score != 0:
         time.sleep(1)
         dealers_hand.append(random.choice(deck))
@@ -109,7 +122,6 @@ def dealers_turn(dealers_hand, deck):
 
 
 def blackjack_round(deck, game_stats):
-
     bet = take_bets()
     print(f"That's £{bet} on the table! Let's play Blackjack!")
     print("-------------------------------------------------")
@@ -126,6 +138,7 @@ def blackjack_round(deck, game_stats):
     time.sleep(1)
 
     if user_score == 0:
+        # dealers_score = 1 is a dummy variable, because the user is bust before the dealers turn.
         game_stats = result(user_score, dealers_score = 1, game_stats = game_stats, bid=bet)
         return game_stats
 
@@ -136,13 +149,10 @@ def blackjack_round(deck, game_stats):
 
     game_stats = result(user_score, dealers_score = dealers_score, game_stats = game_stats, bid=bet)
 
-    print(game_stats)
-    print("-------------------------------------------------")
-
     return game_stats
 
 
-def blackjack(deck = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]):
+def blackjack(deck):
     print(logo)
 
     game_stats = {
@@ -158,7 +168,15 @@ def blackjack(deck = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]):
 
     while True:
         game_stats = blackjack_round(deck, game_stats)
-        play_again =  ' '
+
+        print("-------------------------------------------------")
+        print("GAME STATS:")
+        for stat, value in game_stats.items():
+            stat_label = stat.replace('_', ' ').title()
+            print("{}: {}".format(stat_label, value))
+        print("-------------------------------------------------")
+
+        play_again =  ''
         while play_again not in 'yn':
             play_again = str(input("Would you like to play again? (Y/N) ")).lower()
 
@@ -166,22 +184,4 @@ def blackjack(deck = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]):
             return game_stats
 
 
-blackjack()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+blackjack(deck=[11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10])

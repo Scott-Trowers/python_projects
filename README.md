@@ -1,6 +1,6 @@
 # 100 days of code
 
-Small Python projects, one per day, to build consistent practice and improve Python fluency.
+Small Python projects, one per day, to build consistent practice and improve Python fluency. Code is written without AI assistance; AI is used for documentation only.
 
 Each project lives in `projects/dayN/` as an independent uv-managed Python project.
 
