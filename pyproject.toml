@@ -6,4 +6,4 @@ line-length = 120
 select = ["E", "F", "W"]
 
 [tool.ruff.lint.per-file-ignores]
-"**/art.py" = ["W291", "W293"]  # ASCII art requires trailing whitespace
+"**/art.py" = ["W291", "W293"]  # ASCII art requires whitespace
