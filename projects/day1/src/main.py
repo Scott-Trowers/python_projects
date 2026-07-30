@@ -38,7 +38,7 @@ def evaluate_hand(hand):
         print(f"Score: {score}")
 
     if score > 21:
-        print(f"!!BUST!!")
+        print("!!BUST!!")
         # convert a bust to 0 for easier score comparison and stat tracking
         score = 0
 
@@ -61,7 +61,7 @@ def users_turn(user_hand, deck):
         else:
             stick_or_twist = ""
             while stick_or_twist not in list('st'):
-                stick_or_twist = str(input(f"Do you want to stick (S) or twist (T)? ")).lower()
+                stick_or_twist = str(input("Do you want to stick (S) or twist (T)? ")).lower()
 
             if stick_or_twist == "t":
                 time.sleep(1)
