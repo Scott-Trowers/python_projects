@@ -18,12 +18,9 @@ class Question:
         return user_answer
 
     def check_answer(self, user_answer):
-        if user_answer == self.answer:
-            return True
-        else:
-            return False
+        return user_answer == self.answer
 
-class Quiz_Brain:
+class QuizBrain:
     def __init__(self, question_data: list):
         self.question_number = 0
         self.score = 0

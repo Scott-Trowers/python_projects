@@ -18,7 +18,7 @@ uv run src/main.py
 ## classes
 
 - `Question` — models a single quiz question, handles console prompt validation, and checks answers
-- `Quiz_Brain` — manages quiz flow, instantiates questions, and tracks user scores and percentage metrics
+- `QuizBrain` — manages quiz flow, instantiates questions, and tracks user scores and percentage metrics
 
 ## features
 
