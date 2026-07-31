@@ -1,13 +1,13 @@
 class Question:
-    def __init__(self, question_number, question_data):
+    def __init__(self, question_number, question_data, question_key, answer_key):
         self.question_number = question_number
         self.question_entry = question_data[question_number]
-        self.question_text = self.question_entry["text"]
-        self.answer = self.question_entry["answer"].lower()
+        self.question_text = self.question_entry[question_key]
+        self.answer = self.question_entry[answer_key].lower()
 
     def ask_question(self):
         # adjust question number from 0-indexed
-        print(f"Q{self.question_number + 1}) {self.question_text}...")
+        print(f"Q{self.question_number + 1}) {self.question_text}")
 
         user_answer = ''
         while user_answer not in ['true', 'false']:
@@ -21,15 +21,22 @@ class Question:
         return user_answer == self.answer
 
 class QuizBrain:
-    def __init__(self, question_data: list):
+    def __init__(self, question_data: list, question_key, answer_key):
         self.question_number = 0
         self.score = 0
         self.score_pct = 0.00
         self.question_data = question_data
         self.num_questions = len(question_data)
+        self.question_key = question_key
+        self.answer_key = answer_key
 
     def initialise_question(self):
-        question = Question(self.question_number, self.question_data)
+        question = Question(
+            self.question_number,
+            self.question_data,
+            self.question_key,
+            self.answer_key
+        )
         self.question_number += 1
         user_answer = question.ask_question()
         user_was_correct = question.check_answer(user_answer)
