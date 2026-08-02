@@ -12,7 +12,7 @@ def extract_rgb(image_path, show_cols = False):
 
     rgb_values = []
     for col in dot_cols:
-        rgb_values.append([(col.rgb[0], col.rgb[1], col.rgb[2])])
+        rgb_values.append((col.rgb[0], col.rgb[1], col.rgb[2]))
 
     if show_cols:
         plt.imshow(rgb_values)
@@ -23,7 +23,7 @@ def extract_rgb(image_path, show_cols = False):
 
 def draw_row_of_dots(turtle, dots, cols, dot_size=50, dot_spacing=100):
     for _ in range(dots):
-        random_col = random.choice(cols)[0]
+        random_col = random.choice(cols)
         turtle.dot(dot_size, random_col)
         turtle.forward(dot_spacing)
 
@@ -36,10 +36,10 @@ def start_next_row(turtle, dots, dot_spacing):
     turtle.right(180)
 
 
-def draw_page_of_dots(turtle, rows):
+def draw_page_of_dots(turtle, rows, dots_per_row, dot_spacing, rgb_values):
     for row in range(rows):
-        draw_row_of_dots(torterra, dots=7, dot_spacing=100, cols=rgb_values)
-        start_next_row(torterra, dots=7, dot_spacing=100)
+        draw_row_of_dots(turtle, dots=dots_per_row, dot_spacing=dot_spacing, cols=rgb_values)
+        start_next_row(turtle, dots=dots_per_row, dot_spacing=dot_spacing)
 
 
 # display the source image
@@ -52,7 +52,6 @@ rgb_values, background_col = extract_rgb("hirst_dots.png")
 # Turtle and Screen setup
 screen = t.Screen()
 t.colormode(255)
-
 screen.bgcolor(background_col)
 
 torterra = t.Turtle()
@@ -61,13 +60,10 @@ torterra.speed('fastest')
 torterra.width(10)
 torterra.hideturtle()
 
-
-
-
 # begin in the top-left
 torterra.penup()
 torterra.goto(x=-300, y=300)
 
-draw_page_of_dots(torterra, rows=7)
+draw_page_of_dots(torterra, rows=7, dots_per_row=7, dot_spacing=100, rgb_values=rgb_values)
 
 screen.exitonclick()
