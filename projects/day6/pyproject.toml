@@ -1,0 +1,11 @@
+[project]
+name = "day6"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "colorgram-py>=1.2.0",
+    "imageio>=2.37.4",
+    "matplotlib>=3.11.1",
+]
