@@ -54,8 +54,9 @@ class QuizBrain:
         else:
             message_modifier = ""
 
+        score_message = f"{self.score}/{self.question_number}"
         self.score_pct = 100 * self.score / self.question_number
-        print(f"{response}! Your {message_modifier}score is: {self.score}/{self.question_number} ({self.score_pct:.2f}%)\n")
+        print(f"{response}! Your {message_modifier}score is: {score_message} ({self.score_pct:.2f}%)\n")
 
     def start_quiz(self):
         while self.question_number < self.num_questions:
