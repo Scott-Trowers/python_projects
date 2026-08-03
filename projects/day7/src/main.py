@@ -1,6 +1,10 @@
 import turtle as t
 import random
 
+
+STARTING_X_COORD = -300
+
+
 def UI_setup(finish_line=None):
     """
     Sets up the screen background and draws the finish line marker.
@@ -69,14 +73,14 @@ def take_prediction(turtles):
     Returns:
         str: The name of the predicted winning turtle (lowercase).
     """
-    pred = ''
+    prediction = ''
     turtle_names = turtles.keys()
     nice_turtle_names = ', '.join(turtle_names).title()
 
-    while pred not in turtle_names:
-        pred = t.textinput("Which turtle will win?", f"{nice_turtle_names}?").lower()
+    while prediction not in turtle_names:
+        prediction = t.textinput("Which turtle will win?", f"{nice_turtle_names}?").lower()
 
-    return pred
+    return prediction
 
 
 def turtles_to_start_line(turtles, starting_y = -200):
@@ -90,7 +94,7 @@ def turtles_to_start_line(turtles, starting_y = -200):
     starting_y = starting_y
 
     for name, object in turtles.items():
-        object.teleport(x=-300, y=starting_y)
+        object.teleport(x=STARTING_X_COORD, y=starting_y)
         starting_y += 100
 
 
@@ -179,7 +183,7 @@ def podium(winners_dict, turtles):
     third_place.teleport(x=35, y=-10)
 
 
-def closing_process(splinter, screen, winners, pred):
+def closing_process(splinter, screen, winners, prediction):
     """
     Displays the winner of the race and whether the user's prediction was correct.
 
@@ -187,9 +191,9 @@ def closing_process(splinter, screen, winners, pred):
         splinter: The announcer Turtle object used to write text.
         screen: The Screen object.
         winners (dict): A dictionary of race results.
-        pred (str): The user's predicted winner.
+        prediction (str): The user's predicted winner.
     """
-    correct_pred = (winners[1] == pred)
+    correct_pred = (winners[1] == prediction)
 
     screen.delay(150)
     splinter.teleport(x=0, y=200)
@@ -215,14 +219,14 @@ def turtle_race(turtle_names_and_colours):
     screen, splinter, finish_line = UI_setup()
 
     turtles = generate_turtles(turtle_names_and_colours)
-    pred = take_prediction(turtles)
+    prediction = take_prediction(turtles)
 
     turtles_to_start_line(turtles)
     race_countdown(screen, splinter)
     winners = run_the_race(turtles, screen, finish_line)
 
     podium(winners, turtles)
-    closing_process(splinter, screen, winners, pred)
+    closing_process(splinter, screen, winners, prediction)
 
     screen.exitonclick()
 
