@@ -24,7 +24,7 @@ def UI_setup(finish_line=None):
     splinter.speed('fastest')
     splinter.penup()
 
-    if finish_line == None:
+    if finish_line is None:
         finish_line = screen.screensize()[0] - 100
 
     try:
