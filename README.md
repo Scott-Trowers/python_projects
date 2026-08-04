@@ -20,13 +20,21 @@ projects/
 
 ## Starting a new project
 
-The script at the repo root — run it from the repo root, passing the day number:
+The script at the repo root — run it from the repo root, passing the day number.
+
+To automatically navigate your terminal into the newly created directory, run the script with `source` (or `.`):
+
+```bash
+source ./new_day.sh 17
+```
+
+Alternatively, you can run it directly, though your terminal won't navigate automatically:
 
 ```bash
 ./new_day.sh 17
 ```
 
-This creates `projects/day17/` with a uv project initialised and `src/main.py` ready to go.
+This creates `projects/day17/`, initializes a self-contained uv project, moves `main.py` into `src/`, and runs `uv sync`.
 
 ### Manual steps (for reference)
 
