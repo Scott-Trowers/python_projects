@@ -193,8 +193,6 @@ def off_screen(snake_head, snake_speed, screen_width, screen_height):
 def ouroboros(snake_parts, snake_speed):
     """ Checks if the snake's head is touching another part of the snake."""
     snake_head = snake_parts[0]
-    head_xcoord = snake_head.xcor()
-    head_ycoord = snake_head.ycor()
 
     for part_num in range(1, len(snake_parts)):
         segment = snake_parts[part_num]
@@ -212,7 +210,7 @@ def ouroboros(snake_parts, snake_speed):
 
 def game_over(score, turns, snake_parts, screen_width, snake_speed):
     "Prints a game over message and stats."
-    message1 = f"----- GAME OVER -----"
+    message1 = "----- GAME OVER -----"
     message2 = f"----- Score: {score} ---"
     message3 = f"----- Turns: {turns} ---"
 
@@ -226,5 +224,3 @@ def game_over(score, turns, snake_parts, screen_width, snake_speed):
     snake_parts[0].write(message3, font=('fixedsys', 20, 'bold'))
 
     return message1, message2, message3
-
-

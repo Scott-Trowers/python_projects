@@ -1,4 +1,5 @@
-from snake_controls import *
+from snake_controls import init_snake, update_screen, go_up, go_down, go_left, go_right, snake_body_movement, snake_head_movement, spawn_food, is_food_eaten, off_screen, ouroboros, game_over
+import turtle as t
 
 STARTING_LENGTH = 3
 SNAKE_SPEED = 25
@@ -36,7 +37,7 @@ while game_active:
 
     food_eaten = is_food_eaten(snake_parts[0], food, snake_speed=SNAKE_SPEED)
 
-    if food_eaten == True:
+    if food_eaten:
         score += 1
 
         # grow the snake
