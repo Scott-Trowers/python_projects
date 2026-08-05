@@ -1,4 +1,5 @@
-from snake_controls import init_snake, update_screen, go_up, go_down, go_left, go_right, snake_body_movement, snake_head_movement, spawn_food, is_food_eaten, off_screen, ouroboros, game_over
+from snake_controls import (init_snake, update_screen, snake_body_movement, snake_head_movement, spawn_food,
+                            is_food_eaten, off_screen, ouroboros, game_over)
 import turtle as t
 
 STARTING_LENGTH = 3
