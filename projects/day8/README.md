@@ -2,6 +2,8 @@
 
 A recreation of the classic arcade game "Snake," built with Python's `turtle` library. The player controls a snake that grows longer by eating food while avoiding collisions with the screen boundaries and its own body.
 
+This project includes two implementations: a modern object-oriented (OOP) version and a legacy procedural version.
+
 ---
 
 ## Features
@@ -15,6 +17,22 @@ A recreation of the classic arcade game "Snake," built with Python's `turtle` li
 
 ---
 
+## Implementations
+
+### Object-Oriented Version (Recommended)
+
+The main logic has been refactored into a fully object-oriented script, `snake.py`. This version encapsulates the game's components—the snake, the food, the screen (`SnakePit`), and the game controller (`SnakeCharmer`)—into distinct classes. This approach improves modularity, readability, and makes the code easier to maintain and extend.
+
+This is the recommended version to run.
+
+### Semi-Procedural Version (Legacy)
+
+The original version of the game was built using a procedural approach. The files for this version are located in the `src/semi-procedural` directory.
+
+**Note:** This version is considered legacy and is no longer actively maintained. The `snake_controls.py` file has been refactored, and its functions are largely commented out, so this version is not functional in its current state. It remains in the repository for historical and educational purposes to show the evolution of the codebase.
+
+---
+
 ## File Structure
 
 ```text
@@ -22,8 +40,10 @@ day8/
 ├── pyproject.toml        # Project configuration
 ├── README.md             # This file
 └── src/
-    ├── main.py           # Main application logic and game loop
-    └── snake_controls.py # Functions for snake movement, food, and game state
+    ├── snake.py          # Recommended: Standalone object-oriented version of the game
+    └── semi-procedural/
+        ├── main.py           # Legacy: Main application logic for the procedural version
+        └── snake_controls.py # Legacy: Helper functions for the procedural version
 ```
 
 ---
@@ -47,7 +67,12 @@ This project is managed with [uv](https://github.com/astral-sh/uv).
 
 ## Usage
 
-To run the Snake game, execute the main script from the project root:
+To run the recommended object-oriented Snake game, execute the `snake.py` script from the project root:
 ```bash
-uv run src/main.py
+uv run src/snake.py
 ```
+To attempt to run the legacy semi-procedural version:
+```bash
+uv run src/semi-procedural/main.py
+```
+*(Note: As mentioned, the legacy version is not currently functional.)*
