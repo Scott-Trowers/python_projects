@@ -18,10 +18,10 @@ else
     is_sourced=false
 fi
 
-if [ -z "$1" ]; then
-    echo "usage: ./new_day.sh <day_number>"
+if [ -z "$1" ] || [ -z "$2" ]; then
+    echo "usage: ./new_day.sh <day_number> <title>"
     echo "or to automatically navigate your terminal:"
-    echo "  source ./new_day.sh <day_number>"
+    echo "  source ./new_day.sh <day_number> <title>"
     if [ "$is_sourced" = true ]; then
         return 1
     else
@@ -29,7 +29,7 @@ if [ -z "$1" ]; then
     fi
 fi
 
-DIR="projects/day$1"
+DIR="projects/day${1}_${2}"
 
 if [ -d "$DIR" ]; then
     echo "error: $DIR already exists"
@@ -77,7 +77,7 @@ echo "Successfully created and initialized $DIR"
 if [ "$is_sourced" = false ]; then
     echo ""
     echo "Note: To automatically navigate your terminal into the new directory next time, use:"
-    echo "  source ./new_day.sh $1"
+    echo "  source ./new_day.sh $1 $2"
     echo ""
     echo "For now, please run: cd $DIR"
 fi\
