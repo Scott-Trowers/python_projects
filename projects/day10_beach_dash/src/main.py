@@ -39,7 +39,7 @@ cycles = 0
 while game_on:
     cycles += 1
 
-    if cycles == 30:
+    if cycles == 40:
         background.egg_hatch()
         turt.hatch()
         screen.listen()
@@ -82,6 +82,9 @@ while game_on:
     time.sleep(0.1)
     screen.update()
 
+scoreboard.update_high_score()
+
 scoreboard.game_over()
+
 screen.mainloop()
 screen.exitonclick()
