@@ -12,16 +12,20 @@ prompt_msg = "Make a guess!"
 guessed_states = {}
 score = len(guessed_states)
 
-while score < 50:
+game_active = True
+
+while game_active:
 
     guess = 'placeholder'
-    while guess == 'placeholder' or guess in guessed_states.keys():
-        guess = screen.textinput(title=f"Name the US States! ({score}/50)", prompt=prompt_msg)
+    while guess == 'placeholder':
+        guess = screen.textinput(title=f"Name the US States! ({score}/50)", prompt=prompt_msg).title()
 
     if guess in guessed_states.keys():
         prompt_msg = f"{guess} already named! Guess again..."
+    elif guess == 'Exit':
+        game_active = False
     else:
-        matching_state = states[states.state.str.lower() == guess]
+        matching_state = states[states.state.str.title() == guess]
         if len(matching_state) > 0:
             prompt_msg = f"{guess} is correct! Guess again..."
 
@@ -36,6 +40,21 @@ while score < 50:
 
     score = len(guessed_states)
 
-t.TK.messagebox.showinfo(title="CORRECT!", message="All 50 states names!")
+    if score == 50:
+        game_active = False
+
+if score == 50:
+    t.TK.messagebox.showinfo(title="You Win!", message="All 50 states named!")
+else:
+    t.TK.messagebox.showinfo(title="Not Quite!", message=f"You named {score} out of 50 states!")
+
+answer_key = states[['state']].copy()
+answer_key['guessed'] = (answer_key.state.isin(guessed_states.keys()))
+answer_key = answer_key.sort_values(['guessed', 'state'], ascending=[False, True])
+
+print(f"You named {score} out of 50 states!\n")
+print(answer_key)
+
+answer_key.to_csv('../data/last_game_results.csv', index=False)
 
 screen.mainloop()
