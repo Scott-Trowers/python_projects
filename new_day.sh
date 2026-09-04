@@ -57,6 +57,27 @@ if ! uv init --no-workspace; then
     if [ "$is_sourced" = true ]; then return 1; else exit 1; fi
 fi
 
+# Overwrite the generic README with the standardized template
+cat <<EOF > README.md
+# day $1 - ${2//_/ }
+
+<brief description>
+
+## how to run
+
+\`\`\`bash
+uv run src/main.py
+\`\`\`
+
+## skills
+
+- <skills>
+
+## features
+
+- <features>
+EOF
+
 if ! mkdir src; then
     echo "error: failed to create src directory"
     if [ "$is_sourced" = true ]; then return 1; else exit 1; fi
