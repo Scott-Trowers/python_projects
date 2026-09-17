@@ -17,7 +17,7 @@ LONG_BREAK_MIN = 20
 TIMER_CYCLES = 0
 active_timer = None
 
-# ---------------------------- TIMER RESET ------------------------------- # 
+# ---------------------------- TIMER RESET ------------------------------- #
 def reset_timer():
     global TIMER_CYCLES
     global active_timer
@@ -33,7 +33,7 @@ def reset_timer():
     ticks.config(text="")
 
 
-# ---------------------------- TIMER MECHANISM ------------------------------- # 
+# ---------------------------- TIMER MECHANISM ------------------------------- #
 def timer(timer_text):
     global TIMER_CYCLES
 
