@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 import passman_funcs as pf
 import pyperclip
 
@@ -13,6 +14,11 @@ def generate_pw():
 
     pyperclip.copy(new_pw)
 
+# ----------------------------CLEAR INPUT ------------------------------ #
+def clear_input():
+    website_ent.delete(0, tk.END)
+    email_username_ent.delete(0, tk.END)
+    pass_ent.delete(0, tk.END)
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save_details():
@@ -34,14 +40,26 @@ def save_details():
     else:
         succ_msg.set("Saved!")
 
-        pf.save_to_file(details)
+        pf.update_details_file(details)
 
-        website_ent.delete(0, tk.END)
-        email_username_ent.delete(0, tk.END)
-        pass_ent.delete(0, tk.END)
+    clear_input()
 
     success_lab.config(text=succ_msg.get())
 
+# ------------------------ SEARCH FOR DETAILS-------------------------- #
+def search_details():
+    website_to_search = website_ent.get()
+
+    details = pf.search_details_file(website_to_search)
+
+    if details is None:
+        search_msg = f"No Details Found for:\n{website_to_search}"
+    else:
+        search_msg = f"Username: {details["username"]}\nPassword: {details["password"]}"
+
+    clear_input()
+
+    messagebox.showinfo(title="Password Search", message=search_msg)
 
 # ---------------------------- UI SETUP ------------------------------- #
 # window
@@ -75,7 +93,7 @@ success_lab.grid(column=2, row=4, sticky='w')
 # entries
 website_var = tk.StringVar()
 website_ent = tk.Entry(background='white', fg='black', insertbackground='black')
-website_ent.grid(column=1, row=1, columnspan=2, sticky='ew')
+website_ent.grid(column=1, row=1, sticky='ew')
 website_ent.focus()
 
 email_user_var = tk.StringVar()
@@ -87,10 +105,13 @@ pass_ent = tk.Entry(background='white', show="*", fg='black', insertbackground='
 pass_ent.grid(column=1, row=3, sticky='ew')
 
 # buttons
+search_but = tk.Button(text='Search', command=search_details)
+search_but.grid(column=2, row=1, pady=(0, 4))
+
 generate_but = tk.Button(text='Generate', command=generate_pw)
-generate_but.grid(column=2, row=3)
+generate_but.grid(column=2, row=3, pady=(0, 4))
 
 add_but = tk.Button(text='Save', command=save_details)
-add_but.grid(column=1, row=4)
+add_but.grid(column=1, row=4, pady=(0, 4))
 
 window.mainloop()
