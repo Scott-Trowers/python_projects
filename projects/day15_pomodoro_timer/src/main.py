@@ -41,13 +41,13 @@ def timer(timer_text):
 
     if TIMER_CYCLES%2 != 0:
         canvas.itemconfig(countdown_text, text="Working...")
-        countdown(3, timer_text)
+        countdown(WORK_MIN*60, timer_text)
     if TIMER_CYCLES%6 == 0:
         canvas.itemconfig(countdown_text, text="Take a break!")
-        countdown(4, timer_text)
+        countdown(LONG_BREAK_MIN*60, timer_text)
     elif TIMER_CYCLES%2 == 0:
         canvas.itemconfig(countdown_text, text="Quick break...")
-        countdown(1, timer_text)
+        countdown(SHORT_BREAK_MIN*60, timer_text)
 
     if TIMER_CYCLES%2 == 0:
         tick_marks.set(tick_marks.get() + "✔")
