@@ -1,4 +1,5 @@
 import tkinter as tk
+from PIL import Image, ImageTk
 
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
@@ -81,7 +82,8 @@ window.config(
 window.grid_columnconfigure(1, minsize=50)
 
 # background image
-bg_img = tk.PhotoImage(file='../data/tomato_outline.png').subsample(3, 3)
+# loaded via Pillow because the system Tk (8.5) can't decode this PNG's RGBA data itself
+bg_img = ImageTk.PhotoImage(Image.open('../data/tomato_outline.png').reduce(3))
 canvas = tk.Canvas(width=CANVAS_WIDTH, height=CANVAS_HEIGHT, bg=RED, highlightthickness=0)
 canvas.create_image(CANVAS_WIDTH/2, CANVAS_HEIGHT/2, image=bg_img)
 
