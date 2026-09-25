@@ -1,6 +1,2 @@
-def main():
-    print("Hello from dayday17-spanish-flashcards!")
+BACKGROUND_COLOR = "#B1DDC6"
 
-
-if __name__ == "__main__":
-    main()
