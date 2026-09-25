@@ -5,6 +5,8 @@ import random
 
 BACKGROUND_COLOR = 'goldenrod1'
 ACCENT_COLOUR = 'red2'
+REVERSE_BACKGROUND_COLOUR = 'floral white'
+REVERSE_ACCENT_COLOUR = 'red2'
 TOP_N_WORDS = 100
 
 spanish_words_path = '../data/spanish_common_words.csv'
@@ -53,7 +55,8 @@ def random_word():
 
 def new_word():
     random_word()
-    card_canvas.itemconfig(word_text, text=current_spanish_word.get())
+    card_canvas.itemconfig(word_text, text=f'"{current_spanish_word.get()}"')
+
 
 def count_rem_words():
     global selected_words
@@ -86,6 +89,34 @@ def tick_func():
     check_progress()
     new_word()
 
+def flip_card():
+    global current_side
+    print(current_side)
+
+    if current_side == "front":
+        card_canvas.itemconfig(
+            word_text,
+            text=f'"{current_english_translation.get()}"',
+            fill=REVERSE_ACCENT_COLOUR
+        )
+        card_canvas.config(bg=REVERSE_BACKGROUND_COLOUR)
+        show_answer_button.config(highlightbackground=REVERSE_ACCENT_COLOUR)
+
+
+        current_side = "back"
+    else:
+        card_canvas.itemconfig(
+            word_text,
+            text=f'"{current_spanish_word.get()}"',
+            fill=ACCENT_COLOUR
+        )
+        card_canvas.config(bg=BACKGROUND_COLOR)
+        show_answer_button.config(highlightbackground=BACKGROUND_COLOR)
+
+        current_side = "front"
+
+
+current_side = "front"
 
 selected_words = load_words()
 
@@ -132,6 +163,17 @@ card_count_text = card_canvas.create_text(
 
 card_canvas.grid(column=0, row=0, columnspan=3)
 
+show_answer_button = tk.Button(
+    text="Flip Card",
+    bg=BACKGROUND_COLOR,
+    fg=ACCENT_COLOUR,
+    highlightthickness=0,
+    highlightbackground=BACKGROUND_COLOR,
+    command=flip_card
+)
+show_answer_window = card_canvas.create_window(200, 180, anchor='s', window=show_answer_button)
+
+
 new_word()
 
 cross_button = tk.Label(
@@ -151,9 +193,5 @@ tick_button = tk.Label(
 )
 tick_button.bind("<Button-1>", lambda e: tick_func())
 tick_button.grid(column=2, row=1, pady=(20, 0))
-
-
-
-
 
 window.mainloop()
