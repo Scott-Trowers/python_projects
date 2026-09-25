@@ -79,8 +79,8 @@ def remove_word():
 
 
 def cross_func():
-    print("Return card")
     new_word()
+    flip_to_front()
 
 
 def tick_func():
@@ -88,32 +88,44 @@ def tick_func():
     remove_word()
     check_progress()
     new_word()
+    flip_to_front()
+
+
+def flip_to_front():
+    global current_side
+
+    card_canvas.itemconfig(
+        word_text,
+        text=f'"{current_spanish_word.get()}"',
+        fill=ACCENT_COLOUR
+    )
+    card_canvas.config(bg=BACKGROUND_COLOR)
+    show_answer_button.config(highlightbackground=BACKGROUND_COLOR)
+
+    current_side = "front"
+
+
+def flip_to_back():
+    global current_side
+
+    card_canvas.itemconfig(
+        word_text,
+        text=f'"{current_english_translation.get()}"',
+        fill=REVERSE_ACCENT_COLOUR
+    )
+    card_canvas.config(bg=REVERSE_BACKGROUND_COLOUR)
+    show_answer_button.config(highlightbackground=REVERSE_ACCENT_COLOUR)
+
+    current_side = "back"
+
 
 def flip_card():
     global current_side
-    print(current_side)
 
     if current_side == "front":
-        card_canvas.itemconfig(
-            word_text,
-            text=f'"{current_english_translation.get()}"',
-            fill=REVERSE_ACCENT_COLOUR
-        )
-        card_canvas.config(bg=REVERSE_BACKGROUND_COLOUR)
-        show_answer_button.config(highlightbackground=REVERSE_ACCENT_COLOUR)
-
-
-        current_side = "back"
+        flip_to_back()
     else:
-        card_canvas.itemconfig(
-            word_text,
-            text=f'"{current_spanish_word.get()}"',
-            fill=ACCENT_COLOUR
-        )
-        card_canvas.config(bg=BACKGROUND_COLOR)
-        show_answer_button.config(highlightbackground=BACKGROUND_COLOR)
-
-        current_side = "front"
+        flip_to_front()
 
 
 current_side = "front"
