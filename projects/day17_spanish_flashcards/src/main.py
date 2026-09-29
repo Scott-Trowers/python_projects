@@ -44,7 +44,6 @@ def check_progress():
 
 
 def random_word():
-    global selected_words
 
     current_index.set(random.randint(0, len(selected_words)-1))
     print(f"rand ind: {current_index.get()}")
@@ -59,7 +58,6 @@ def new_word():
 
 
 def count_rem_words():
-    global selected_words
 
     card_count.set(len(selected_words))
 
@@ -92,7 +90,6 @@ def tick_func():
 
 
 def flip_to_front():
-    global current_side
 
     card_canvas.itemconfig(
         word_text,
@@ -102,11 +99,10 @@ def flip_to_front():
     card_canvas.config(bg=BACKGROUND_COLOR)
     show_answer_button.config(highlightbackground=BACKGROUND_COLOR)
 
-    current_side = "front"
+    current_side.set("front")
 
 
 def flip_to_back():
-    global current_side
 
     card_canvas.itemconfig(
         word_text,
@@ -116,19 +112,16 @@ def flip_to_back():
     card_canvas.config(bg=REVERSE_BACKGROUND_COLOUR)
     show_answer_button.config(highlightbackground=REVERSE_ACCENT_COLOUR)
 
-    current_side = "back"
+    current_side.set("back")
 
 
 def flip_card():
-    global current_side
 
-    if current_side == "front":
+    if current_side.get() == "front":
         flip_to_back()
     else:
         flip_to_front()
 
-
-current_side = "front"
 
 selected_words = load_words()
 
@@ -145,6 +138,8 @@ window.config(
 current_index = tk.IntVar()
 current_spanish_word = tk.StringVar()
 current_english_translation = tk.StringVar()
+
+current_side = tk.StringVar(value='front')
 
 card_count = tk.IntVar(value=TOP_N_WORDS)
 
